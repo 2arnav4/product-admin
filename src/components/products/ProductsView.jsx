@@ -11,6 +11,7 @@ import ErrorState from "@/components/ui/ErrorState";
 import ProductTable from "@/components/products/ProductTable";
 import ProductCards from "@/components/products/ProductCards";
 import Pagination from "@/components/products/Pagination";
+import Filters from "@/components/products/Filters";
 
 export default function ProductsView() {
   const { query, updateQuery } = useProductQuery();
@@ -24,6 +25,23 @@ export default function ProductsView() {
     if (isPageOutOfRange) updateQuery({ page: totalPages }, { replace: true });
   }, [isPageOutOfRange, totalPages, updateQuery]);
 
+  return (
+    <div className="space-y-4">
+      <Filters query={query} updateQuery={updateQuery} />
+      <ProductResults
+        data={data}
+        error={error}
+        isLoading={isLoading}
+        isPageOutOfRange={isPageOutOfRange}
+        retry={retry}
+        query={query}
+        updateQuery={updateQuery}
+      />
+    </div>
+  );
+}
+
+function ProductResults({ data, error, isLoading, isPageOutOfRange, retry, query, updateQuery }) {
   if (error) return <ErrorState message={error.message} onRetry={retry} />;
   if (!data || isPageOutOfRange) return <Spinner />;
 
