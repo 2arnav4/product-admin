@@ -35,3 +35,18 @@ export async function getProductById(id, { signal } = {}) {
   const { data } = await api.get(`/products/${encodeURIComponent(id)}`, { signal });
   return data;
 }
+
+export async function createProduct(payload) {
+  const { data } = await api.post("/products/add", payload);
+  return data;
+}
+
+export async function updateProduct(id, payload) {
+  const { data } = await api.put(`/products/${encodeURIComponent(id)}`, payload);
+  return data;
+}
+
+export async function deleteProduct(id) {
+  const { data } = await api.delete(`/products/${encodeURIComponent(id)}`);
+  return data;
+}
