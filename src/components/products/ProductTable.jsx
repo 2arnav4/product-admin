@@ -31,7 +31,7 @@ export default function ProductTable({ products }) {
             </td>
             <td className="py-2 pr-4 capitalize text-gray-600">{product.category}</td>
             <td className="py-2 pr-4 text-right tabular-nums">{formatPrice(product.price)}</td>
-            <td className="py-2 pr-4 text-right tabular-nums">{product.rating.toFixed(1)} ★</td>
+            <td className="py-2 pr-4 text-right tabular-nums">{Number(product.rating ?? 0).toFixed(1)} ★</td>
             <td className="py-2 text-right tabular-nums">{product.stock}</td>
           </tr>
         ))}

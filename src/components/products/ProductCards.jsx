@@ -23,7 +23,7 @@ export default function ProductCards({ products }) {
               <p className="capitalize text-gray-500">{product.category}</p>
               <div className="mt-1 flex justify-between tabular-nums text-gray-700">
                 <span>{formatPrice(product.price)}</span>
-                <span>{product.rating.toFixed(1)} ★</span>
+                <span>{Number(product.rating ?? 0).toFixed(1)} ★</span>
                 <span>Stock {product.stock}</span>
               </div>
             </div>
