@@ -2,7 +2,7 @@
 
 A small admin dashboard for managing products, built on the free [DummyJSON](https://dummyjson.com) API.
 
-**Live:** _add Vercel URL here_
+**Live:** https://merchdesk-nu.vercel.app
 **Stack:** Next.js 16 (App Router) · React 19 · Tailwind CSS 4 · Axios
 
 Demo login: `emilys` / `emilyspass`
