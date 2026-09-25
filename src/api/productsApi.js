@@ -50,3 +50,11 @@ export async function deleteProduct(id) {
   const { data } = await api.delete(`/products/${encodeURIComponent(id)}`);
   return data;
 }
+
+export async function getAllProductsSummary({ signal } = {}) {
+  const { data } = await api.get("/products", {
+    params: { limit: 0, select: "title,price,stock,category,thumbnail" },
+    signal,
+  });
+  return data;
+}

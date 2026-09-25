@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { login } from "@/api/authApi";
 import { useIsLoggedIn } from "@/hooks/useIsLoggedIn";
 
-const DEFAULT_REDIRECT = "/products";
+const DEFAULT_REDIRECT = "/dashboard";
 
 function getSafeRedirect() {
   const next = new URLSearchParams(window.location.search).get("next");
@@ -59,7 +59,10 @@ export default function LoginPage() {
         onSubmit={handleSubmit}
         className="w-full max-w-sm space-y-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
       >
-        <h1 className="text-xl font-semibold text-gray-900">Sign in</h1>
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">Merchdesk</p>
+          <h1 className="text-xl font-semibold text-gray-900">Sign in</h1>
+        </div>
 
         <label className="block text-sm text-gray-700">
           Username
