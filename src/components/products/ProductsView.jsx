@@ -76,6 +76,7 @@ function ProductResults({ data, error, isLoading, isPageOutOfRange, retry, query
         page={query.page}
         pageSize={query.pageSize}
         total={data.total}
+        shownCount={data.products.length}
         onPageChange={(page) => updateQuery({ page })}
         onPageSizeChange={(pageSize) => updateQuery({ pageSize })}
       />

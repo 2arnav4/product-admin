@@ -1,9 +1,9 @@
 import { PAGE_SIZES } from "@/lib/productQuery";
 import { getPageNumbers, getShowingRange, getTotalPages } from "@/lib/pagination";
 
-export default function Pagination({ page, pageSize, total, onPageChange, onPageSizeChange }) {
+export default function Pagination({ page, pageSize, total, shownCount, onPageChange, onPageSizeChange }) {
   const totalPages = getTotalPages(total, pageSize);
-  const { from, to } = getShowingRange(page, pageSize, total);
+  const { from, to } = getShowingRange(page, pageSize, total, shownCount);
 
   const buttonClass =
     "min-w-9 rounded-md border border-gray-300 px-3 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-40";

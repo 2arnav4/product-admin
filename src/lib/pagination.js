@@ -2,10 +2,13 @@ export function getTotalPages(total, pageSize) {
   return Math.max(1, Math.ceil(total / pageSize));
 }
 
-export function getShowingRange(page, pageSize, total) {
-  if (total === 0) return { from: 0, to: 0 };
+export function getShowingRange(page, pageSize, total, shownCount = pageSize) {
+  if (total === 0 || shownCount === 0) return { from: 0, to: 0 };
   const from = (page - 1) * pageSize + 1;
-  const to = Math.min(page * pageSize, total);
+  const to = from + shownCount - 1;
+  // Locally deleted products shrink the total but not the API's paging, so the
+  // last page can run past it; keep the range inside the total.
+  if (to > total) return { from: Math.max(1, total - shownCount + 1), to: total };
   return { from, to };
 }
 

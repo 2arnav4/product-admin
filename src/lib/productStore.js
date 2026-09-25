@@ -75,11 +75,16 @@ export function applyChangesToList(data, query) {
     .filter((product) => !deleted.includes(product.id))
     .map((product) => ({ ...product, ...updated[product.id] }));
 
-  const isDefaultFirstPage = !query.q && !query.category && query.page === 1;
+  const isDefaultView = !query.q && !query.category;
+  const deletedServerCount = deleted.filter((id) => !isLocalProduct(id)).length;
+  const removedOnPage = data.products.length - kept.length;
 
   return {
     ...data,
     products: kept,
-    localProducts: isDefaultFirstPage ? created : [],
+    // Unfiltered: every deleted API product belongs to this total. Filtered: only
+    // the ones seen on this page are known, so the count is a best effort.
+    total: data.total - (isDefaultView ? deletedServerCount : removedOnPage),
+    localProducts: isDefaultView && query.page === 1 ? created : [],
   };
 }
