@@ -30,4 +30,4 @@
 
 ## Where AI helped
 
-I used Claude Code for planning the module structure, explaining smaller concepts, and debugging. I wrote most of the modules myself, including all the logic-heavy parts. Claude Code wrote the parts that were not logic-intensive. Every module was tested first by Claude Code with automated browser checks and then manually by me, and Claude Code reviewed all the code. When I got stuck on an issue, including the one above, Claude Code helped me track down the cause. I can explain every decision in these notes.
+I used Claude Code throughout the assignment. I wrote the core logic myself, and Claude Code wrote a large share of the remaining code, mostly the parts that were not logic-intensive. I also used it for planning the module structure, explaining smaller concepts, and debugging. Every module was tested first by Claude Code with automated browser checks and then manually by me, and Claude Code reviewed all the code. When I got stuck on an issue, including the one above, Claude Code helped me track down the cause. I can explain every decision in these notes.
