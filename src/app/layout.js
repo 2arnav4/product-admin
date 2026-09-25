@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Product Admin",
-  description: "Product admin dashboard built on DummyJSON",
+  title: "Merchdesk",
+  description: "Merchdesk — product admin dashboard built on DummyJSON",
 };
 
 export default function RootLayout({ children }) {

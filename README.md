@@ -1,4 +1,4 @@
-# Product Admin Dashboard
+# Merchdesk — Product Admin Dashboard
 
 A small admin dashboard for managing products, built on the free [DummyJSON](https://dummyjson.com) API.
 
