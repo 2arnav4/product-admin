@@ -21,6 +21,7 @@ No environment variables are needed. `npm run build` creates a production build 
 ## What is finished
 
 - [x] Login with error messages, protected product pages, logout
+- [x] Admin layout: sidebar navigation and a dashboard with revenue, orders, catalogue and low-stock stats
 - [x] Product list: image, title, category, price, rating, stock — table on desktop, cards on mobile
 - [x] Server-side pagination with `limit`/`skip`, page numbers, Previous/Next, page size 10/20/50, "Showing 21–40 of 194"
 - [x] Debounced search via `/products/search`, resets to page 1
@@ -50,6 +51,6 @@ src/
   api/          one function per DummyJSON endpoint (no UI code)
   services/     product actions that combine the API and the local change store
   hooks/        useFetch (race-safe), useProductQuery (URL state), useDebouncedCallback, useIsLoggedIn
-  components/   auth, ui (spinner, empty, error, confirm dialog), products (table, cards, pagination, filters, form, detail)
-  app/          routes: /login, /products, /products/new, /products/[id], /products/[id]/edit
+  components/   auth, layout (sidebar), dashboard, ui (spinner, empty, error, confirm dialog), products (table, cards, pagination, filters, form, detail)
+  app/          routes: /login, /dashboard, /products, /products/new, /products/[id], /products/[id]/edit
 ```
