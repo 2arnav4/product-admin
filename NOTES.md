@@ -1,5 +1,21 @@
 # Notes
 
+## A problem I faced and how I fixed it
+
+**Problem:** After logging out, pressing the browser's Back button could land on a protected page stuck on "Checking session..." forever, instead of sending the user to the login page.
+
+**How to reproduce:** Log in, open `/products` and then `/products?page=2` by typing each in the address bar (two full page loads), log out, then press Back.
+
+**Cause:** Browsers keep a frozen copy of recently visited pages in memory, called the back-forward cache (bfcache), so Back feels instant. Pressing Back unfreezes that copy instead of loading the page again. My route guard only checked the login when the page loaded, and React effects don't re-run on a restored page, so the check never happened again. It only appears after full page loads. Moving around inside the app with Next's links stays in one page, so the guard runs normally there.
+
+**How I found it:** While testing the logout flow, Back landed on the protected URL instead of `/login`. Logging the browser's page-restore events showed the page was coming from the cache.
+
+**Fix:** In `src/components/auth/AuthGuard.jsx`, the guard now listens for the event the browser fires when it restores a page from bfcache. If the page came from the cache and there is no valid token in storage, it reloads the page, so the guard runs fresh and redirects to login with the return URL kept. It reads the token from storage rather than React state, because the state inside the frozen copy is stale. Logged-in users are not affected, so Back stays instant for them.
+
+**Why not other options:** Always reloading on restore slows Back for everyone. Disabling bfcache with no-store cache headers behaves differently across browsers. A server-side check can't help, because restoring from the cache never contacts the server.
+
+**Limit:** This is a client-side guard. Real protection needs the API to reject requests without a valid token, which DummyJSON's product endpoints don't do.
+
 ## Choices
 
 - **The URL is the single source of truth** for page, page size, search, category and sort. Components only change the URL, and the list is re-derived from it, so refresh, shared links and the Back button all work without extra state.
@@ -12,10 +28,6 @@
 - **Admin layout:** a sidebar with a dashboard (revenue and orders from DummyJSON carts, catalogue and low-stock stats), inspired by an admin panel I built earlier for an e-commerce client.
 - **Prices stay in USD** because that is the currency of the DummyJSON data; showing a rupee symbol without converting would display wrong prices.
 
-## A problem I faced and how I fixed it
-
-After logging in, the token was deleted immediately and every protected request failed. I was calling `saveToken(token, minutes)` with an extra argument, so the refresh token was being used as the expiry time. `"eyJ..." * 60000` is `NaN`, and my expiry check (`!(expiresAt > Date.now())`) treats `NaN` as expired, so the token was cleared on the next read. I found it by logging the stored expiry value, fixed the call, and kept the NaN-safe comparison because it fails safe if storage is ever corrupted.
-
 ## Where AI helped
 
-I used Claude (Claude Code) throughout the assignment. It helped me plan the module structure, explained the concepts before I wrote code (Axios interceptors, AbortController, URL state, hydration, debouncing), reviewed and debugged the parts I typed, wrote a large share of the later modules when I was short on time, and ran automated browser checks against every module and the live deployment. I reviewed every file and can explain the decisions above.
+I used Claude Code for planning the module structure, explaining smaller concepts, and debugging. I wrote most of the modules myself, including all the logic-heavy parts. Claude Code wrote the parts that were not logic-intensive. Every module was tested first by Claude Code with automated browser checks and then manually by me, and Claude Code reviewed all the code. When I got stuck on an issue, including the one above, Claude Code helped me track down the cause. I can explain every decision in these notes.
