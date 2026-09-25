@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { logout } from "@/api/authApi";
 
-export default function LogoutButton() {
+export default function LogoutButton({ className = "" }) {
   const router = useRouter();
 
   const handleLogout = () => {
@@ -12,11 +12,7 @@ export default function LogoutButton() {
   };
 
   return (
-    <button
-      type="button"
-      onClick={handleLogout}
-      className="rounded-md border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-100"
-    >
+    <button type="button" onClick={handleLogout} className={className}>
       Log out
     </button>
   );
